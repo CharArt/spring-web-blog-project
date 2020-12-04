@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+      <meta name="description" content=""/>
+      <meta name="author" content=""/>
+      <title>Blog Home</title>
+      <!-- Bootstrap core CSS -->
+      <link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet"/>
+      <!-- Custom styles for this template -->
+      <link th:href="@{/resources/css/blog-home.css}" rel="stylesheet"/>
+  </head>
+
+  <body>
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+          <div class="container">
+              <a class="navbar-brand" href="#">Start Bootstrap</a>
+              <button class="navbar-toggler" type="button"  data-toggle="collapse"
+                                                            data-target="#navbarResponsive"
+                                                            aria-controls="navbarResponsive"
+                                                            aria-expanded="false"
+                                                            aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                  <ul class="navbar-nav ml-auto">
+                      <li class="nav-item active">
+                          <a class="nav-link" href="#">Home
+                              <span class="sr-only">(current)</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="#">About</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="#">Services</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="#">Contact</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+
+    <!-- Page Content -->
+      <div class="container">
+          <div class="row">
+              <!-- Blog Entries Column -->
+              <div class="col-md-8">
+                  <!-- Blog Posts -->
+                  <div th:each="post: ${posts}" class="card mb-4">
+                      <div class="card-body">
+                          <h2 class="card-title" th:text="${post.title}"></h2>
+                          <p class="card-text" th:text="${post.content}"></p>
+                          <a th:href="@{/post/{postId}(postId = ${post.postId})}" class="btn btn-primary">View</a>
+                      </div>
+                      <div class="card-footer text-muted">
+                          Posted on <span th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+                          <a th:href="@{/user/{username}(username = ${post.user.username})}" th:text="${post.user.username}"></a>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Sidebar Widgets Column -->
+              <div class="col-md-4">
+                  <!-- Search Widget -->
+                  <div class="card my-4">
+                      <h5 class="card-header">Search</h5>
+                      <div class="card-body">
+                          <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Search for...">
+                              <span class="input-group-append">
+                                  <button class="btn btn-secondary" type="button">Go!</button>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+<!--Home Work---------------------------------------------------------------------------------------------------------->
+                  <!-- Categories Widget -->
+                      <div class="card my-4">
+                          <h5 class="card-header">Users</h5>
+                          <div class="card-body">
+                              <li th:each="user:${users}">
+                                  <a th:href="${'?username='+user.username}" class="card-title" id="username" th:text="${user.username}"></a>
+                              </li>
+                          </div>
+                      </div>
+                  <!-- Side Widget -->
+                  <div class="card my-4" >
+                      <h5 class="card-header">Tag pool</h5>
+                      <div class="card-body">
+                          <li th:each="tag:${tags}">
+                              <a th:href="${'?name='+tag.name}" class="card-title" id="name" th:text="${tag.name}"></a>
+                          </li>
+                      </div>
+                  </div>
+<!--Home Work---------------------------------------------------------------------------------------------------------->
+              </div>
+          </div>
+      <!-- /.row -->
+      </div>
+        <!-- /.container -->
+        <!-- Footer -->
+      <footer class="py-5 bg-dark">
+          <div class="container">
+              <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+          </div>
+          <!-- /.container -->
+      </footer>
+  </body>
+</html>
